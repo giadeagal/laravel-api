@@ -6,6 +6,6 @@ import Vue from 'vue';
 import App from './views/App';
 
 const app = new Vue({
-    el: '#root',
-    render: h => h(app)
+    el: '#app',
+    render: h => h(App)
 });

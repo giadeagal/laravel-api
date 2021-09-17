@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div id="root"></div>
+        <div id="app"></div>
         <script src="{{ asset('js/front.js') }}"></script>
     </body>
 </html>

@@ -7,7 +7,7 @@
 
 
 <script>
-import Header from '../components/Header';
+import Header from '../components/Header.vue';
 import Main from '../components/Main.vue';
 export default{
     name: "App",
@@ -18,6 +18,6 @@ export default{
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+   
 </style>
