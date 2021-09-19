@@ -3,11 +3,21 @@
         <p>pagina {{ currentPage }} di {{ lastPage }}</p>
         <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(currentPage - 1)">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(1)">1</a></li>
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(2)">2</a></li>
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(3)">3</a></li>
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(currentPage + 1)">Next</a></li>
+    <li class="page-item" :class="{'disabled' : currentPage===1}">
+        <a class="page-link"  @click="getPosts(currentPage - 1)">Previous</a>
+    </li>
+    <li class="page-item" :class="{'active' : currentPage===1}">
+        <a class="page-link" @click="getPosts(1)">1</a>
+    </li>
+    <li class="page-item" :class="{'active' : currentPage===2}">
+        <a class="page-link" @click="getPosts(2)">2</a>
+    </li>
+    <li class="page-item" :class="{'active' : currentPage===3}">
+        <a class="page-link" @click="getPosts(3)">3</a>
+    </li>
+    <li class="page-item" :class="{'disabled' : currentPage===lastPage}">
+        <a class="page-link" @click="getPosts(currentPage + 1)">Next</a>
+    </li>
   </ul>
 </nav>
         <div class="row">
@@ -18,7 +28,7 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{post.title}}</h5>
-                    <p class="card-text">{{post.content}}</p>
+                    <p class="card-text">{{truncate(post.content, 50)}}</p>
                     <a href="#" class="btn btn-primary">dettagli</a>
                 </div>
                 <div class="card-footer text-muted">
@@ -30,11 +40,16 @@
         </div>
         <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(currentPage - 1)">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(1)">1</a></li>
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(2)">2</a></li>
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(3)">3</a></li>
-    <li class="page-item"><a class="page-link" href="#" @click="getPosts(currentPage + 1)">Next</a></li>
+    <li class="page-item" :class="{'disabled' : currentPage===1}">
+        <a class="page-link"  @click="getPosts(currentPage - 1)">Previous</a>
+    </li>
+    <li class="page-item" :class="{'active' : currentPage==={i}}" v-for="i in lastPage" :key="i">
+        <a class="page-link" @click="getPosts({i})">{{i}}</a>
+    </li>
+
+    <li class="page-item" :class="{'disabled' : currentPage===lastPage}">
+        <a class="page-link" @click="getPosts(currentPage + 1)">Next</a>
+    </li>
   </ul>
 </nav>
     </main>
@@ -66,6 +81,13 @@ export default{
                     this.currentPage = x.data.content.current_page;
                     this.lastPage = x.data.content.last_page;
                 })
+        },
+        truncate(x, y){
+            if (x.length > y){
+                return x.substr(0, y) + "...";
+            }
+
+            return x
         }
     }
 }
