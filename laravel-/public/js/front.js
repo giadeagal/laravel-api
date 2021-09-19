@@ -1980,15 +1980,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Main",
   data: function data() {
     return {
-      call: 'http://localhost:8000/api/posts'
+      call: 'http://localhost:8000/api/posts',
+      posts: [],
+      currentPage: 1,
+      LastPage: null
     };
   },
-  created: function created() {},
-  methods: function methods() {}
+  created: function created() {
+    this.getPosts();
+  },
+  methods: {
+    getPosts: function getPosts(pagenum) {
+      var _this = this;
+
+      axios.get(this.call, {
+        params: {
+          page: pagenum
+        }
+      }).then(function (x) {
+        _this.posts = x.data.content.data;
+        _this.currentPage = x.data.content.current_page;
+        _this.lastPage = x.data.content.last_page;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -37772,56 +37796,112 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("main", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-6" }, [
-          _c("div", { staticClass: "card text-center m-5" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("\n                categoria\n            ")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("h5", { staticClass: "card-title" }, [_vm._v("titolo")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "card-text" }, [
-                _vm._v(
-                  "contenuto Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam asperiores illo aspernatur eum dolore officia quia harum impedit vitae eos."
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "a",
-                { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                [_vm._v("dettagli")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-footer text-muted" }, [
-              _vm._v("\n                tags\n            ")
-            ])
-          ])
+  return _c("main", { staticClass: "container" }, [
+    _c("p", [
+      _vm._v(
+        "pagina " + _vm._s(_vm.currentPage) + " di " + _vm._s(_vm.lastPage)
+      )
+    ]),
+    _vm._v(" "),
+    _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+      _c("ul", { staticClass: "pagination" }, [
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(_vm.currentPage - 1)
+                }
+              }
+            },
+            [_vm._v("Previous")]
+          )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-6" }, [
-          _c("div", { staticClass: "card text-center m-5" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("\n                categoria\n            ")
-            ]),
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(1)
+                }
+              }
+            },
+            [_vm._v("1")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(2)
+                }
+              }
+            },
+            [_vm._v("2")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(3)
+                }
+              }
+            },
+            [_vm._v("3")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(_vm.currentPage + 1)
+                }
+              }
+            },
+            [_vm._v("Next")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
+      _vm._l(_vm.posts, function(post, i) {
+        return _c("div", { key: i, staticClass: "col-6" }, [
+          _c("div", { staticClass: "card text-center  my-3" }, [
+            _c("div", { staticClass: "card-header" }),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c("h5", { staticClass: "card-title" }, [_vm._v("titolo")]),
+              _c("h5", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(post.title))
+              ]),
               _vm._v(" "),
               _c("p", { staticClass: "card-text" }, [
-                _vm._v(
-                  "contenuto Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam asperiores illo aspernatur eum dolore officia quia harum impedit vitae eos."
-                )
+                _vm._v(_vm._s(post.content))
               ]),
               _vm._v(" "),
               _c(
@@ -37831,15 +37911,99 @@ var staticRenderFns = [
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-footer text-muted" }, [
-              _vm._v("\n                tags\n            ")
-            ])
+            _c("div", { staticClass: "card-footer text-muted" })
           ])
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+      _c("ul", { staticClass: "pagination" }, [
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(_vm.currentPage - 1)
+                }
+              }
+            },
+            [_vm._v("Previous")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(1)
+                }
+              }
+            },
+            [_vm._v("1")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(2)
+                }
+              }
+            },
+            [_vm._v("2")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(3)
+                }
+              }
+            },
+            [_vm._v("3")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "page-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.getPosts(_vm.currentPage + 1)
+                }
+              }
+            },
+            [_vm._v("Next")]
+          )
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
