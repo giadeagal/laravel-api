@@ -24,7 +24,7 @@
             <div class="col-6" v-for="post,i in posts" :key="i">
                 <div class="card text-center  my-3" >
                 <div class="card-header">
-                   
+                   {{dFormat(post.created_at)}}
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{post.title}}</h5>
@@ -88,6 +88,21 @@ export default{
             }
 
             return x
+        },
+        dFormat(d){
+            const date = new Date(d);
+
+            let day = date.getDate();
+            if(day < 10){
+                day = '0' + day;
+            }
+
+            let month = parseInt(date.getMonth() + 1);
+            if(month < 10){
+                month = '0' + month;
+            }
+
+            return day + " / " + month + " / " + date.getFullYear();
         }
     }
 }

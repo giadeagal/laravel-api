@@ -2033,6 +2033,22 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return x;
+    },
+    dFormat: function dFormat(d) {
+      var date = new Date(d);
+      var day = date.getDate();
+
+      if (day < 10) {
+        day = '0' + day;
+      }
+
+      var month = parseInt(date.getMonth() + 1);
+
+      if (month < 10) {
+        month = '0' + month;
+      }
+
+      return day + " / " + month + " / " + date.getFullYear();
     }
   }
 });
@@ -37945,7 +37961,13 @@ var render = function() {
       _vm._l(_vm.posts, function(post, i) {
         return _c("div", { key: i, staticClass: "col-6" }, [
           _c("div", { staticClass: "card text-center  my-3" }, [
-            _c("div", { staticClass: "card-header" }),
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v(
+                "\n                   " +
+                  _vm._s(_vm.dFormat(post.created_at)) +
+                  "\n                "
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("h5", { staticClass: "card-title" }, [
